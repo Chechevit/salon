@@ -4,13 +4,35 @@
     <div class="container">
         @if (Auth::user()->role_id == 1)
             <div>admin</div>
+            <div class="container">
+                <div>
+                    <h2>Добавить категорию</h2>
+                    <form action="{{ route('add-category') }}" method="post">
+                        @csrf
+                        <input type="text" placeholder="Название" name="title">
+                        <input type="text" placeholder="Описание" name="description">
+                        <input type="submit" value="Добавить">
+                    </form>
+                </div>
+                <div>
+                    <h2>Редактировать и удалить категорию</h2>
+
+                    @foreach ($categories as $category)
+                        <form action="edit-category/{{ $category->id }}" method="post">
+                            @csrf
+                            <input type="text" name="title" value="{{ $category->title }}" placeholder="{{ $category->title }}">
+                            <input type="text" name="description" value="{{ $category->description }}" placeholder="{{ $category->description }}">
+                            <input type="submit" value="Редактировать">
+                            <a href="delete-category/{{ $category->id }}">Удалить</a>
+                        </form>
+                    @endforeach
+                </div>
+
+            </div>
         @endif
 
         @if (Auth::user()->role_id == 2)
             <p>master</p>
-            <a href="{{ route('schedule') }}">Расписание</a>
-            <a href="">График работы</a>
-
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -40,7 +62,7 @@
                     <a class="nav-link" href="#">Посты</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Расписание</a>
+                    <a class="nav-link" href="{{ route('schedule') }}">Расписание</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled">Редактировать профиль</a>

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('photo', 255);
+            $table->string('photo', 255)->default('asd.png');
             $table->string('title');
             $table->string('description');
             $table->timestamps();

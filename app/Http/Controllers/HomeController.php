@@ -26,9 +26,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(User $user)
+    public function index(User $user, Category $category, Schedule $schedule)
     {
-        return view('home', ['user' => $user]);
+        return view('home', ['user' => $user, 'categories' => $category->all(), 'schedules' => $schedule->all()]); 
     }
 
     public function master(){
@@ -43,9 +43,9 @@ class HomeController extends Controller
 
 
 
-    public function schedule_(Schedule $schedule){
-        return view('home', ['schedules' => $schedule->all()]);
-    }
+    // public function schedule_(Schedule $schedule){
+    //     return view('home', ['schedules' => $schedule->all()]);
+    // }
 
 
 
@@ -57,5 +57,24 @@ class HomeController extends Controller
     public function addSchedule()
     {
         return view('add-schedule', ['categories' => Category::all()]);
+    }
+
+    public function add(Request $request){
+        Category::create([
+            'title' => $request['title'],
+            'description' => $request['description']
+        ]);
+        return redirect()->back();
+    }
+
+    public function editCategory($id, Category $category, Request $request){
+        $category->find($id)->update(
+            [
+                'title'=>$request['title'],
+                'description' => $request['description']
+            ]
+            );
+            $category->save();
+            return redirect()->back();
     }
 }
