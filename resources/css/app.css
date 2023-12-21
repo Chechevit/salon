@@ -1,0 +1,18 @@
+.w-300 {
+    width: 50%;
+}
+
+.card img {
+    opacity: .5;
+}
+
+.links {
+    color: rgb(132, 0, 255);
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.links:hover {
+    color: rgb(151, 10, 0);
+    transition: 0.5s;
+}

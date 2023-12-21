@@ -2,105 +2,46 @@
 
 @section('content')
     <div class="container">
-        @if (Auth::user()->role_id == 1)
-            <div>admin</div>
-            <div class="container">
-                <div>
-                    <h2>Добавить категорию</h2>
-                    <form action="{{ route('add-category') }}" method="post">
-                        @csrf
-                        <input type="text" placeholder="Название" name="title">
-                        <input type="text" placeholder="Описание" name="description">
-                        <input type="submit" value="Добавить">
-                    </form>
-                </div>
-                <div>
-                    <h2>Редактировать и удалить категорию</h2>
-
-                    @foreach ($categories as $category)
-                        <form action="edit-category/{{ $category->id }}" method="post">
-                            @csrf
-                            <input type="text" name="title" value="{{ $category->title }}" placeholder="{{ $category->title }}">
-                            <input type="text" name="description" value="{{ $category->description }}" placeholder="{{ $category->description }}">
-                            <input type="submit" value="Редактировать">
-                            <a href="delete-category/{{ $category->id }}">Удалить</a>
-                        </form>
-                    @endforeach
-                </div>
-
-            </div>
-        @endif
-
-        @if (Auth::user()->role_id == 2)
-            <p>master</p>
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="..." class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ Auth::user()->name }}</h5>
-                            <p class="card-text">Это более широкая карточка с вспомогательным текстом ниже в качестве
-                                естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
-                            <p class="card-text">
-                                <small class="text-body-secondary">Мастер</small> <br>
-                                <small class="text-body-secondary">Последнее обновление 3 мин.
-                                    назад</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- навигация --}}
-            <ul class="nav nav-underline">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">График работы</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Посты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('schedule') }}">Расписание</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Редактировать профиль</a>
-                </li>
-            </ul>
-            {{--  --}}
-
-            {{-- график работы --}}
+        <div>
+            <h2>Записи</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Имя</th>
                         <th scope="col">Дата</th>
                         <th scope="col">Время</th>
-                        <th scope="col">Категория</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
-                @foreach ($schedules as $schedule)
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>{{ $schedule->user_id }}</td>
-                            <td>{{ $schedule->date }}</td>
-                            <td>{{ $schedule->time }}</td>
-                            <td>{{ $schedule->category_id }}</td>
-                            <td class="cont_ico">
-                                <a href="#"><img src="img/delete.png" alt="del"></a>
-                            </td>
-
-                        </tr>
-                @endforeach
+                <tbody>
+                    <tr>
+                        @foreach ($records as $record)
+                            <td>{{ $record['schedule']->date }}</td>
+                            <td>{{ $record['schedule']->time }}</td>
+                            <td><a href="{{ route('delete-record', $record->id) }}">Отменить запись</a></td>
+                        @endforeach
+                    </tr>
                 </tbody>
             </table>
-        @endif
+        </div>
+        <div>
+            <form action="{{ route('update-user', $user->id) }}" method="POST">
+                @csrf
 
-        @if (Auth::user()->role_id == 3)
-            <div>client</div>
-        @endif
+                <div class="mb-3">
+                    <label for="name" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Адрес электронной почты</label>
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1"
+                        value="{{ $user->email }}">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Пароль</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </form>
+        </div>
     </div>
 @endsection

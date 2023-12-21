@@ -13,4 +13,7 @@ class Schedule extends Model
         'user_id',
         'category_id'
     ];
+    public function record(){
+        return $this->hasMany(Record::class);
+    }
 }

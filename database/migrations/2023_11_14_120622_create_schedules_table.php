@@ -23,6 +23,10 @@ return new class extends Migration
 
             $table->foreignId('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
+
+            $table->foreignId('status_id')->default(1);
+            $table->foreign('status_id')->references('id')->on('statuses');
+            
             $table->timestamps();
         });
     }

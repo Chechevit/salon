@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Record;
 use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,55 +27,39 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(User $user, Category $category, Schedule $schedule)
+    public function index(User $user)
     {
-        return view('home', ['user' => $user, 'categories' => $category->all(), 'schedules' => $schedule->all()]); 
+        $role = Auth::user()->role_id;
+        
+        
+        switch($role){
+            case 1: 
+                return redirect('admin/');
+            case 2:
+                return redirect('master/cabinet');
+            case 3: 
+                $records = Record::where('user_id', Auth::user()->id)->get();
+                $records->map(function ($record) {
+                    return [
+                        'schedule' => $record->schedule,
+                        'record' => $record,
+                    ];
+                });
+                return view('home', ['records' => $records, 'user'=>Auth::user()]);
+        }
     }
 
-    public function master(){
-        return view('home', ['users' => User::all(), 'posts' => Post::all()]);
-    }
-
-
-
-    // public function schedule_graphic (Schedule $schedule){
-    //     return view('home', ['schedule' => $schedule]);
-    // }
-
-
-
-    // public function schedule_(Schedule $schedule){
-    //     return view('home', ['schedules' => $schedule->all()]);
-    // }
-
-
-
-    public function schedule()
-    {
-        return view('schedule-master');
-    }
-
-    public function addSchedule()
-    {
-        return view('add-schedule', ['categories' => Category::all()]);
-    }
-
-    public function add(Request $request){
-        Category::create([
-            'title' => $request['title'],
-            'description' => $request['description']
+    public function updateUser(User $user, Request $request){
+        if(empty($request->password)){
+            $password = $user->password;
+        }else{
+            $password = $request->password;
+        }
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $password
         ]);
         return redirect()->back();
-    }
-
-    public function editCategory($id, Category $category, Request $request){
-        $category->find($id)->update(
-            [
-                'title'=>$request['title'],
-                'description' => $request['description']
-            ]
-            );
-            $category->save();
-            return redirect()->back();
     }
 }

@@ -11,4 +11,8 @@ class Record extends Model
         'schedule_id',
         'user_id'
     ];
+
+    public function schedule(){
+        return $this->belongsTo(Schedule::class);
+    }
 }

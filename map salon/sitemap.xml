@@ -1,0 +1,39 @@
+<?xml version = '1.0' encoding ='UTF-8'?>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url>
+    <loc>https://salon.ru/</loc>
+    <lastmod>2018-03-19T18:54:13+04:00</lastmod>
+    <changefreq>always</changefreq>
+    <priority>1.0</priority>
+ </url>
+ <url>
+    <loc>https://salon.ru/cabinet</loc>
+    <lastmod>2018-03-19T18:57:09+04:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+ </url>
+  <url>
+    <loc>https://mysite.ru/login</loc>
+    <lastmod>2018-03-19T18:57:09+04:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+ </url>
+  <url>
+    <loc>https://mysite.ru/registration</loc>
+    <lastmod>2018-03-19T18:57:09+04:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+ </url>
+  <url>
+    <loc>https://mysite.ru/admin</loc>
+    <lastmod>2018-03-19T18:57:09+04:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+ </url>
+  <url>
+    <loc>https://mysite.ru/home</loc>
+    <lastmod>2018-03-19T18:57:09+04:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+ </url>
+ </urlset>
